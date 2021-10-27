@@ -1,0 +1,49 @@
+﻿@model AllIssueListViewModel
+
+<h2>Все задачи</h2>
+<br />
+<div>
+    <div class="list-group">
+        @foreach (var item in Model.Issues)
+        {
+
+            <a asp-controller="Issue" asp-action="Details" asp-route-id="@item.Id" class="btn list-group-item text-left">
+                <h4 class="list-group-item-heading">@item.IssueText</h4>
+                <p class="list-group-item-text">
+                    @{
+                        //string fullInfo = "";
+                        if (item.IncludeMyDay)
+                        {
+                            <span>&#9728</span>
+                            <span> Мой день </span>
+                            <span>&#8226 </span>
+                        }
+                        if (item.Checklist != null)
+                        {
+                            <span> @item.Checklist.ListName </span>
+                            <span>&#8226 </span>
+                        }
+                        if (item.CompletionDate != null)
+                        {
+                            <span>&#128198</span>
+                            <span>@item.CompletionDate.Value.ToShortDateString() </span>
+                            <span>&#8226 </span>
+                        }
+                        if (item.ReminderDate != null)
+                        {
+                            <span>&#128276</span>
+                            <span>@item.ReminderDate.Value.ToShortDateString() </span>
+                            <span>&#8226 </span>
+                        }
+                        if (string.IsNullOrEmpty(item.Note))
+                        {
+                            <span>&#128276 </span>
+                        }
+                    }
+                </p>
+            </a>
+        }
+    </div>
+
+
+</div>

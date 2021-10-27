@@ -1,0 +1,86 @@
+﻿@inject UserManager<DAL.Tables.Users.User> userManager
+@{
+    var user = await userManager.GetUserAsync(User);
+}
+
+
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - UI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css"/>
+</head>
+<body style="background-image: url(https://catherineasquithgallery.com/uploads/posts/2021-02/1613308985_87-p-sinii-delovoi-fon-97.jpg)">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand">ToDoList</a>
+              
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-route-userId="@user.Id" asp-controller="Issue" asp-action="GetMyDayList">Мой день</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-route-userId="@user.Id" asp-controller="Issue" asp-action="PlannedTaskList">Запланировано</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-route-userId="@user.Id" asp-controller="Issue" asp-action="AllIssueList">Всё задачи</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-route-userId="@user.Id" asp-controller="Checklist" asp-action="GetAllChecklists">Списки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-route-userId="@user.Id" asp-controller="Group" asp-action="GetAllGroupsList">Группы</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                }
+            </div>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="btn nav-item" asp-action="Logout" asp-controller="Account">Выход</a> 
+                }
+                else
+                {
+                    <a class="btn nav-item d-sm-inline-flex" asp-action="Register" asp-controller="Account">Региcтрация</a>
+                    <a class="btn nav-item d-sm-inline-flex" asp-action="Login" asp-controller="Account">Вход</a>
+                }
+            </div>
+        </nav>
+    </header>
+    <div class="container" @*style="background-image: url(https://to-do-cdn.microsoft.com/static-assets/c87265a87f887380a04cf21925a56539b29364b51ae53e089c3ee2b2180148c6/icons/logo.png)"*@>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    @if (User.Identity.IsAuthenticated)
+    { 
+        @*<div class="add-btn">
+            <button asp-controller="Issue" asp-action="AddIssue" type="button" class="btn btn-primary mb-2 btn-circle">
+                <i class="fas fa-check plus-size">+</i>
+            </button>
+        </div>*@
+    }
+    <footer class="border-top footer text-muted">
+        @*<div class="container">
+            &copy; 2021 - UI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>*@
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

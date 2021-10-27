@@ -1,0 +1,69 @@
+﻿@*@using Microsoft.AspNetCore.Identity;*@
+
+@model DetailsViewModel
+@*<h2>Д</h2>
+    <br />*@
+
+<form method="post" asp-controller="Issue" asp-action="Details">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div hidden>
+        <input hidden asp-for="Id" value="@Model.Id" class="form-control col-xs-2" type="text" id="example-text-input">
+    </div>
+
+    <div class="form-check form-switch form-group row">
+        <input asp-for="IncludeMyDay" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Добавить в список мой день</label>
+    </div>
+
+    <div class="form-group row">
+        @{
+            var item = new SelectListItem() { Text = " " };
+
+            var checklists = Model
+                .Checklists
+                .Select(i => new SelectListItem() { Text = i.ListName })
+                .ToList();
+            checklists.Insert(0, item);
+        }
+        <label asp-for="SelectedChecklist" class="col-xs-2 col-form-label">Категория для задачи</label>
+        <select class="form-control col-xs-5" asp-for="SelectedChecklist" asp-items="@checklists"></select>
+    </div>
+    <div class="form-group row">
+        <label asp-for="IssueText" class="col-xs-2 col-form-label">Текст задачи</label>
+        <br />
+        <input asp-for="IssueText" value="@Model.IssueText" class="form-control col-xs-2" type="text" id="example-text-input">
+        <span asp-validation-for="IssueText"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="ReminderDate" class="col-xs-2 col-form-label">Напомнить</label>
+        <br />
+        <input asp-for="ReminderDate" class="form-control col-xs-5" type="date" id="example-text-input">
+        <span asp-validation-for="ReminderDate"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="CompletionDate" class="col-xs-2 col-form-label">Добавить дату выполнения</label>
+        <br />
+        <input asp-for="CompletionDate" class="form-control col-xs-5" type="date" id="example-text-input">
+        <span asp-validation-for="CompletionDate"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Repetition" class="col-xs-2 col-form-label">Повтор (в днях)</label>
+        <br />
+        <input asp-for="Repetition" class="form-control col-xs-5" type="number" id="example-text-input">
+        <span asp-validation-for="Repetition"></span>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Note" class="col-xs-2 col-form-label">Заметка</label>
+        <br />
+        <input asp-for="Note" class="form-control col-xs-5" type="text" id="example-text-input">
+        <span asp-validation-for="Note"></span>
+    </div>
+    
+    <div class="form-group row">
+        <button asp-controller="Issue" asp-action="ReturnToMyDayList" class="btn btn-primary mb-2">Назад</button>
+        <button type="submit" class="btn btn-primary mb-2">Сохранить</button>
+        <button asp-controller="Issue" asp-action="DeleteIssue" asp-route-id="@Model.Id" type="submit" class="btn btn-primary mb-2 bg-danger">Удалить задачу</button>
+    </div>
+</form>
+

@@ -1,0 +1,55 @@
+﻿@model ChecklistIssuesListViewModel
+
+<h2>@Model.ChecklistName</h2>
+<br />
+<div>
+    <div class="list-group">
+        @foreach (var item in Model.Issues)
+        {
+            <a asp-controller="Issue" asp-action="Details" asp-route-id="@item.Id" class="btn list-group-item text-left">
+                <h4 class="list-group-item-heading">@item.IssueText</h4>
+                <p class="list-group-item-text">
+                    @{
+                        if (item.IncludeMyDay)
+                        {
+                            <span>&#9728</span>
+                            <span> Мой день </span>
+                            <span>&#8226 </span>
+                        }
+                        if (item.Checklist != null)
+                        {
+                            <span> @item.Checklist.ListName </span>
+                            <span>&#8226 </span>
+                        }
+                        if (item.CompletionDate != null)
+                        {
+                            <span>&#128198</span>
+                            <span>@item.CompletionDate.Value.ToShortDateString() </span>
+                            <span>&#8226 </span>
+                        }
+                        if (item.ReminderDate != null && item.ReminderDate.Value.Year > 2020)
+                        {
+                            <span>&#128276</span>
+                            <span>@item.ReminderDate.Value.ToShortDateString() </span>
+                            <span>&#8226 </span>
+                        }
+                        if (string.IsNullOrEmpty(item.Note))
+                        {
+                            <span>&#128276 </span>
+                        }
+                    }
+                </p>
+            </a>
+        }
+
+        @*<br />
+            <form method="post">
+                <div class="input-group mb-3">
+
+                    <input id="issueText" name="IssueText" type="text" class="form-control" placeholder="Напишите свою задача" aria-label="Добавить задачу" aria-describedby="basic-addon2">
+                    <button asp-controller="Issue" asp-action="MyDayList">Добавить</button>
+                    <input id="userId" name="userId" value="@Model?.User?.Id" hidden type="text" />
+                </div>
+            </form>*@
+    </div>
+</div>

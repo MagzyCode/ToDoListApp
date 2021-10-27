@@ -1,0 +1,26 @@
+﻿@model GroupListViewModel
+
+<h2>Все группы</h2>
+<br />
+<div>
+    <div class="list-group">
+        @foreach (var item in Model.Groups)
+        {
+            <a asp-controller="Group" asp-action="ShowGroupChecklists" asp-route-id="@item.Id" asp-route-userId="@Model.User?.Id" class="btn list-group-item text-left">
+                <h4 class="list-group-item-heading">&#9997 @item.GroupName</h4>
+            </a>
+        }
+
+        <br />
+        <form method="post">
+            <div class="input-group mb-3">
+                <input id="groupName" name="groupName" type="text" class="form-control" placeholder="Введите название новой группы" aria-label="Добавить группу" aria-describedby="basic-addon2">
+                <button asp-controller="Group" asp-action="AddGroup">Добавить</button>
+                <input id="userId" name="userId" value="@Model?.User?.Id" hidden type="text" />
+            </div>
+        </form>
+
+    </div>
+
+
+</div>

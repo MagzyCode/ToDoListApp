@@ -1,0 +1,27 @@
+﻿@model GroupChecklistsListViewModel
+
+<h2>@Model.GroupName</h2>
+<br />
+<div>
+    <div class="list-group">
+        @foreach (var item in Model.Checklists)
+        {
+            //Здесь нужно вставить переход на список всех задач для списка
+            <a asp-controller="Checklist" asp-action="ShowChecklistIssues" asp-route-id="@item.Id" asp-route-userId="@Model.User?.Id" class="btn list-group-item text-left">
+                <h4 class="list-group-item-heading">📋 @item.ListName</h4>
+            </a>
+        }
+
+        @*<br />
+        <form method="post">
+            <div class="input-group mb-3">
+                <input id="checklistName" name="checklistName" type="text" class="form-control" placeholder="Введите название нового списка" aria-label="Добавить список" aria-describedby="basic-addon2">
+                <button asp-controller="Checklist" asp-action="GetAllChecklists">Добавить</button>
+                <input id="userId" name="userId" value="@Model?.User?.Id" hidden type="text" />
+            </div>
+        </form>*@
+
+    </div>
+
+
+</div>

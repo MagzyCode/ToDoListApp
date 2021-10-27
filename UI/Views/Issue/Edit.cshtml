@@ -1,0 +1,50 @@
+﻿@*@using UI.ViewModels
+
+@model CreateFurnitureViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-center">Edit furniture</h1>
+<form enctype="multipart/form-data" class="col-12 contaiter" method="post">
+    <input hidden asp-for="KindOfFurnitureId" value="@Model.KindOfFurnitureId" />
+    <input hidden asp-for="@Model.CountOnStorage" value="@Model.CountOnStorage" />
+    <input hidden asp-for="Id" value="@Model.Id" />
+    <div class="row">
+
+        <div class="col-7">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input type="text" class="form-control" asp-for="Name" value="@Model.Name">
+                <span asp-validation-for="Name" class="bg-warning"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <input type="text" class="form-control" asp-for="Description" value="@Model.Description">
+                <span asp-validation-for="Description" class="bg-warning"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cost"></label>
+                <input class="form-control" asp-for="Cost" value="@Model.Cost">
+                <span asp-validation-for="Cost" class="bg-warning"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="File"></label>
+                <input type="file" class="form-control" asp-for="File" value="@Model.File">
+            </div>
+        </div>
+        <div class="col-5">
+            var item in Model.Components
+            {
+            <label asp-for="@item.Raw.Name">Input count of @item.Raw.Name need to create furniture</label>
+            <input type="number" class="form-control" hidden asp-for="@item.Raw.Id" value="@item.Raw.Id">
+            <input type="text" class="form-control" hidden asp-for="@item.Raw.Name" value="@item.Raw.Name">
+            <input type="number" class="form-control" asp-for="@item.CountOfRaw" value="@item.CountOfRaw">
+            }
+            <input class="form-control" hidden asp-for="@Model.Components" value="@Model.Components">
+        </div>
+    </div>
+    <a class="btn bg-secondary" asp-action="Index" asp-route-id="@Model.KindOfFurnitureId">Back</a>
+    <button type="submit" class="btn bg-success" asp-action="Edit" formmethod="post">Save</button>
+</form>*@
